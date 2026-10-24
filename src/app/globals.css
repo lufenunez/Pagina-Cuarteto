@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* Paleta "sala a la luz de velas". Ver CLAUDE.md antes de agregar colores nuevos. */
+@theme {
+  --color-ink: #14110f;
+  --color-ink-2: #1b1714;
+  --color-ink-3: #26201b;
+  --color-parchment: #ede6da;
+  --color-muted: #a69c8e;
+  --color-gold: #b8925a;
+  --color-gold-bright: #d4b07a;
+  --color-line: rgb(237 230 218 / 0.12);
+  --color-danger: #c96f5a;
+}
+
+@theme inline {
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-parchment);
+  font-family: var(--font-sans);
+  /* Cormorant usa números "antiguos" por defecto (el 1 parece una I) */
+  font-variant-numeric: lining-nums;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border border-gold bg-gold px-5 py-2.5 text-xs font-semibold tracking-[0.18em] text-ink uppercase transition-colors hover:border-gold-bright hover:bg-gold-bright;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 border border-line px-5 py-2.5 text-xs font-semibold tracking-[0.18em] text-parchment uppercase transition-colors hover:border-gold hover:text-gold-bright;
+  }
+  .link {
+    @apply text-gold underline decoration-gold/40 underline-offset-4 transition-colors hover:text-gold-bright hover:decoration-gold-bright;
+  }
+  .field {
+    @apply w-full border border-line bg-ink-2 px-3 py-2 text-sm text-parchment outline-none placeholder:text-muted/60 focus:border-gold;
+  }
+  .label {
+    @apply mb-1.5 block text-[0.7rem] font-medium tracking-[0.18em] text-muted uppercase;
+  }
+}
+
+/* La foto de portada se funde con el fondo: hacia abajo en celular, hacia la izquierda y abajo en pantallas grandes */
+.hero-photo {
+  mask-image: linear-gradient(to top, transparent 0%, #000 28%);
+}
+@media (min-width: 768px) {
+  .hero-photo {
+    mask-image:
+      linear-gradient(to right, transparent 0%, #000 35%),
+      linear-gradient(to top, transparent 0%, #000 22%);
+    mask-composite: intersect;
+  }
+}
+
